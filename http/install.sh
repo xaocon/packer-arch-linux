@@ -32,14 +32,13 @@ rm ${TARGET}/install_config.sh
 
 echo '2048,,83,*' | sfdisk -f --no-reread /dev/sda || true
 
-arch-chroot /mnt grub-install --target=i386-pc /dev/sda
+arch-chroot ${TARGET} grub-install --target=i386-pc /dev/sda
 
-sed -i '/^GRUB_TIMEOUT=/s/=[0-9]\+$/=0/' /mnt/etc/default/grub
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+sed -i '/^GRUB_TIMEOUT=/s/=[0-9]\+$/=0/' ${TARGET}/etc/default/grub
+arch-chroot ${TARGET} grub-mkconfig -o /boot/grub/grub.cfg
 
-
-sed -i.orig '$aPermitRootLogin=yes' /mnt/etc/ssh/sshd_config
-arch-chroot /mnt systemctl --no-reload enable sshd.socket
-arch-chroot /mnt pacman -Syu
+sed -i.orig '$aPermitRootLogin=yes' ${TARGET}/etc/ssh/sshd_config
+arch-chroot ${TARGET} systemctl --no-reload enable sshd.socket
+arch-chroot ${TARGET} pacman -Syu
 
 reboot
