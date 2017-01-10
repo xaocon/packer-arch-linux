@@ -19,7 +19,8 @@
             "boot_wait": "5s",
             "boot_command": [
                 "<enter><wait10><wait10><wait10>",
-                "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.sh && /usr/bin/bash ./install.sh<enter><enter>"
+                "cd /dev/shm && /usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/install_config.sh<enter><wait><wait>",
+                "/usr/bin/curl -O http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.sh && /usr/bin/bash ./install.sh<enter>"
             ],
             "disk_size": 20480,
             "ssh_username": "root",
